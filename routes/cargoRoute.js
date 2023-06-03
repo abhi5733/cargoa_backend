@@ -141,5 +141,63 @@ cargoRoute.get("/Manufacturer" , async (req,res)=>{
   })
 
 
+  // search 
+
+cargoRoute.get("/search" , async (req,res)=>{
+
+  const key = req.query.name
+
+  
+  
+  try{
+    
+
+    const data = await cargoModel.find({
+      userID: req.body.userID,
+      $or: [
+        { "orderID": { $regex: key } },
+        { "To": { $regex: key } },
+        { "From": { $regex: key } }
+      ]
+    })
+        res.send(data)
+  }catch(err){
+      res.send(err)
+  }
+
+})
+
+
+  // search 
+
+  cargoRoute.get("/search1" , async (req,res)=>{
+
+    const key = req.query.name
+  
+    
+    
+    try{
+      
+  
+      const data = await cargoModel.find({
+        TransporterID: req.body.userID,
+        $or: [
+          { "orderID": { $regex: key } },
+          { "To": { $regex: key } },
+          { "From": { $regex: key } }
+        ]
+      })
+          res.send(data)
+    }catch(err){
+        res.send(err)
+    }
+  
+  })
+  
+  
+
+
+
+
   
 module.exports = {cargoRoute}
